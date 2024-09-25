@@ -1,5 +1,6 @@
 from uuid import UUID
 
+from config import FILE_NAME
 from database import engine
 from dependencies import SKU_service
 from matching import Matcher
@@ -33,7 +34,7 @@ def update_similar_scu(
 
 def main():
     Base.metadata.create_all(engine)
-    parser = Parser("elektronika_products_20240924_223502.xml")
+    parser = Parser(FILE_NAME)
     matcher = Matcher()
     service = SKU_service()
     counter = 0
@@ -51,8 +52,9 @@ def main():
             indexing(products, matcher)
             matching(products, matcher, service)
 
-            if counter % 2000 == 0:
-                matcher.delete_index()
+            print(f"Обработано {counter}: файлов")
+        if counter % 2000 == 0:
+            matcher.delete_index()
 
 
 if __name__ == "__main__":

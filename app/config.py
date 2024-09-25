@@ -12,3 +12,5 @@ DB_PASS = os.environ.get("POSTGRES_PASSWORD")
 
 ELASTIC_HOST = os.environ.get("ELASTIC_HOST")
 ELASTIC_PORT = os.environ.get("ELASTIC_PORT")
+
+FILE_NAME = os.environ.get("FILE_NAME")
