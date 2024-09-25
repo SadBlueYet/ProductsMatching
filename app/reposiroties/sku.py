@@ -31,3 +31,12 @@ class SKURepository(SQLAlchemyRepsitory):
             except Exception:
                 session.rollback()
                 return None
+
+    def get_all(self, filter_by: dict) -> list[dict]:
+        with session_local() as session:
+            results = (
+                session.execute(select(self.model).filter_by(**filter_by))
+                .scalars()
+                .all()
+            )
+            return [res.to_read_model() for res in results]

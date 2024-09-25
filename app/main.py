@@ -46,7 +46,7 @@ def main():
 
         if counter % CHUNK_SIZE == 0:
             products = service.repository.get_products_by_limit(
-                counter - CHUNK_SIZE, counter
+                counter - CHUNK_SIZE, CHUNK_SIZE
             )
 
             indexing(products, matcher)
