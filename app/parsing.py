@@ -1,4 +1,5 @@
 from collections.abc import Generator
+from typing import Any, Optional
 
 from lxml import etree
 
@@ -52,7 +53,7 @@ class Parser:
             "barcode": elem.findtext("barcode"),
         }
 
-    def find_category_by_id_in_stream(self, category_id: str):
+    def find_category_by_id_in_stream(self, category_id: str) -> Optional[Any]:
         context = etree.iterparse(self.xml_file, events=("end",), tag="category")
 
         for _, elem in context:
@@ -63,7 +64,7 @@ class Parser:
                 del elem.getparent()[0]
         return None
 
-    def build_category_path_in_stream(self, category_element):
+    def build_category_path_in_stream(self, category_element) -> str:
         category_name = category_element.text
         parent_id = category_element.get("parentId")
 
@@ -78,7 +79,7 @@ class Parser:
 
         return category_name
 
-    def find_and_build_path(self, category_id: str):
+    def find_and_build_path(self, category_id: str) -> Optional[str]:
         context = etree.iterparse(self.xml_file, events=("end",), tag="category")
 
         for _, elem in context:

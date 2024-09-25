@@ -1,3 +1,5 @@
+from typing import Optional
+
 from config import ELASTIC_HOST, ELASTIC_PORT
 from elasticsearch import Elasticsearch, helpers
 
@@ -5,7 +7,7 @@ from elasticsearch import Elasticsearch, helpers
 class Matcher:
     client: Elasticsearch
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.client = Elasticsearch(f"http://{ELASTIC_HOST}:{ELASTIC_PORT}")
 
     def data_preparation(self, data: list[dict]) -> list[dict]:
@@ -30,7 +32,7 @@ class Matcher:
         ]
         helpers.bulk(self.client, actions)
 
-    def matching(self, data: dict) -> list[dict] | None:
+    def matching(self, data: dict) -> Optional[list[dict]]:
         try:
             match_products = self.client.search(
                 index="products",
